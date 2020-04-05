@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_brew/service/authentication.dart';
+import 'package:flutter_brew/model/user.dart';
+import 'package:flutter_brew/service/authentication_service.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -27,12 +27,12 @@ class _SignInScreenState extends State<SignInScreen> {
         child: RaisedButton(
           child: Text('Sign In Anonymously'),
           onPressed: () async {
-            FirebaseUser result = await authenticationService.signInAnonymous();
+            User result = await authenticationService.signInAnonymous();
             if (result == null) {
               print('error sign in');
             } else {
               print('signed in');
-              print(result.uid);
+              print(result);
             }
           },
         ),
