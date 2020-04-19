@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brew/service/authentication_service.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   final Function toggleView;
 
-  const SignInScreen({Key key, this.toggleView}) : super(key: key);
+  const SignUpScreen({Key key, this.toggleView}) : super(key: key);
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final AuthenticationService authenticationService = AuthenticationService();
 
   // Text Field state
@@ -24,11 +24,11 @@ class _SignInScreenState extends State<SignInScreen> {
       appBar: AppBar(
         backgroundColor: Colors.brown.shade400,
         elevation: 0,
-        title: Text('Sign In to Brew Crew'),
+        title: Text('Sign Up to Brew Crew'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Register'),
+            label: Text('Sign In'),
             onPressed: () {
               widget.toggleView();
             },
@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
               RaisedButton(
                 color: Colors.pink.shade400,
                 child: Text(
-                  'Sign in',
+                  'Register',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
