@@ -12,10 +12,13 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final AuthenticationService authenticationService = AuthenticationService();
+  final _formKey = GlobalKey<FormState>();
 
   // Text Field state
   String email = '';
   String password = '';
+
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +44,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
           horizontal: 50,
         ),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
               TextFormField(
+                validator: (value) => value.isEmpty ? 'Enter an email' : null,
                 onChanged: (value) {
                   setState(() => email = value);
                 },
               ),
               SizedBox(height: 20),
               TextFormField(
+                validator: (value) =>
+                    value.length < 6 ? 'Enter a password 6+ chars long' : null,
                 obscureText: true,
                 onChanged: (value) {
                   setState(() => password = value);
@@ -64,9 +71,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState.validate()) {
+                    dynamic userOrNull = await authenticationService
+                        .registerWithEmailAndPassword(
+                      email,
+                      password,
+                    );
+                    if (userOrNull == null) {
+                      setState(() {
+                        error = 'Please supply a valid email';
+                      });
+                    }
+                  }
                 },
+              ),
+              SizedBox(height: 20),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),

@@ -22,6 +22,21 @@ class AuthenticationService {
     return firebaseUser == null ? null : User(uid: firebaseUser.uid);
   }
 
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult authResult =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      FirebaseUser firebaseUser = authResult.user;
+      return _userFromFirebaseUser(firebaseUser);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future signOut() async {
     try {
       return await _firebaseAuth.signOut();
