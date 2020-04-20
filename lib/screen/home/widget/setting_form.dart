@@ -49,7 +49,6 @@ class _SettingFormState extends State<SettingForm> {
                   },
                 ),
                 SizedBox(height: 20),
-                // dropdown
                 DropdownButtonFormField(
                   decoration: textInputDecoration,
                   value: _currentSugars ?? userData.sugars,
@@ -70,8 +69,10 @@ class _SettingFormState extends State<SettingForm> {
                   max: 900,
                   divisions: 8,
                   value: (_currentStrength ?? userData.strength).toDouble(),
-                  activeColor: Colors.brown[(_currentStrength ?? userData.strength)],
-                  inactiveColor: Colors.brown[(_currentStrength ?? userData.strength)],
+                  activeColor:
+                      Colors.brown[(_currentStrength ?? userData.strength)],
+                  inactiveColor:
+                      Colors.brown[(_currentStrength ?? userData.strength)],
                   onChanged: (double value) {
                     setState(() {
                       _currentStrength = value.round();
@@ -87,10 +88,15 @@ class _SettingFormState extends State<SettingForm> {
                       color: Colors.white,
                     ),
                   ),
-                  onPressed: () {
-                    print(_currentName);
-                    print(_currentSugars);
-                    print(_currentStrength);
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      await DatabaseService(uid: user.uid).updateUserData(
+                        _currentSugars ?? userData.sugars,
+                        _currentName ?? userData.name,
+                        _currentStrength ?? userData.strength,
+                      );
+                    }
+                    Navigator.pop(context);
                   },
                 ),
               ],
