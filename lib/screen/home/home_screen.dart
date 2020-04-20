@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brew/model/brew.dart';
 import 'package:flutter_brew/screen/home/widget/brew_list.dart';
+import 'package:flutter_brew/screen/home/widget/setting_form.dart';
 import 'package:flutter_brew/service/authentication_service.dart';
 import 'package:flutter_brew/service/database_service.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         builder: (BuildContext context) {
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 60),
-            child: Text('bottom sheet'),
+            child: SettingForm(),
           );
         },
       );
