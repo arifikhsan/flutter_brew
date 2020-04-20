@@ -12,10 +12,13 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final AuthenticationService authenticationService = AuthenticationService();
+  final _formKey = GlobalKey<FormState>();
 
   // Text Field state
   String email = '';
   String password = '';
+
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +44,12 @@ class _SignInScreenState extends State<SignInScreen> {
           horizontal: 50,
         ),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
               TextFormField(
+                validator: (value) => value.isEmpty ? 'Enter an email' : null,
                 onChanged: (value) {
                   setState(() => email = value);
                 },
@@ -52,6 +57,9 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(height: 20),
               TextFormField(
                 obscureText: true,
+                validator: (value) => value.length < 6
+                    ? 'Enter a password for 6+ chars long'
+                    : null,
                 onChanged: (value) {
                   setState(() => password = value);
                 },
@@ -64,9 +72,20 @@ class _SignInScreenState extends State<SignInScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState.validate()) {
+                    dynamic resultOrNull = authenticationService.signInWithEmailAndPassword(email, password);
+                    if (resultOrNull == null) {
+                      setState(() {
+                        error = 'Could not ign in with those credential';
+                      });
+                    }
+                  }
                 },
+              ),
+              SizedBox(height: 20),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14),
               ),
             ],
           ),
