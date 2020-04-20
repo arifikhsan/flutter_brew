@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_brew/model/user.dart';
+import 'package:flutter_brew/service/database_service.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -24,12 +25,11 @@ class AuthenticationService {
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult authResult =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      AuthResult authResult = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser firebaseUser = authResult.user;
+      await DatabaseService(uid: firebaseUser.uid)
+          .updateUserData('0', 'new brew member', 100);
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
       print(e.toString());
@@ -39,7 +39,8 @@ class AuthenticationService {
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       FirebaseUser firebaseUser = authResult.user;
       return _userFromFirebaseUser(firebaseUser);
     } catch (e) {
