@@ -3,6 +3,7 @@ import 'package:flutter_brew/service/authentication_service.dart';
 
 class HomeScreen extends StatelessWidget {
   final AuthenticationService authenticationService = AuthenticationService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,12 +16,14 @@ class HomeScreen extends StatelessWidget {
           FlatButton.icon(
             icon: Icon(Icons.person),
             label: Text('Logout'),
-            onPressed:  () async => await authenticationService.signOut(),
+            onPressed: () async => await authenticationService.signOut(),
           )
         ],
       ),
       body: Container(
-        child: Text('home'),
+        child: Center(
+          child: Text('home'),
+        ),
       ),
     );
   }
