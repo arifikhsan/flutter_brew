@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brew/service/authentication_service.dart';
+import 'package:flutter_brew/style/decoration.dart';
 
 class SignUpScreen extends StatefulWidget {
   final Function toggleView;
@@ -53,6 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onChanged: (value) {
                   setState(() => email = value);
                 },
+                decoration: textInputDecoration.copyWith(hintText: 'Email'),
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -62,12 +64,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onChanged: (value) {
                   setState(() => password = value);
                 },
+                decoration: textInputDecoration.copyWith(hintText: 'Password'),
               ),
               SizedBox(height: 20),
               RaisedButton(
                 color: Colors.pink.shade400,
                 child: Text(
-                  'Register',
+                  'Sign Up',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
