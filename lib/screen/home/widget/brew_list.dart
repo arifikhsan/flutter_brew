@@ -21,6 +21,7 @@ class _BrewListState extends State<BrewList> {
 //    });
 
     return ListView.builder(
+      // length called on null
       itemCount: brews.length,
       itemBuilder: (BuildContext context, int index) {
         return BrewTile(brew: brews[index]);
